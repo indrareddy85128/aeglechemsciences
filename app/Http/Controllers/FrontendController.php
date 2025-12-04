@@ -21,14 +21,16 @@ class FrontendController extends Controller
 
     public function about_us()
     {
-        return view('frontend.pages.about-us');
+        $metadetails = PageMetaDetails::where('page_name', 'about_us')->first();
+        return view('frontend.pages.about-us', compact('metadetails'));
     }
 
 
     public function products()
     {
         $products = Product::select('name', 'slug', 'image', 'stock')->get();
-        return view('frontend.pages.products', compact('products'));
+        $metadetails = PageMetaDetails::where('page_name', 'products')->first();
+        return view('frontend.pages.products', compact('products', 'metadetails'));
     }
 
 
@@ -49,11 +51,12 @@ class FrontendController extends Controller
     {
         $category = Category::where('slug', $slug)->with('products')->firstOrFail();
         $categories = Category::all();
-
+        $metadetails = $category->metaDetails;
         return view('frontend.pages.categories-products', [
             'category' => $category,
             'products' => $category->products,
-            'categories' => $categories
+            'categories' => $categories,
+            'metadetails' => $metadetails,
         ]);
     }
 
@@ -61,7 +64,8 @@ class FrontendController extends Controller
     public function contact_us()
     {
         $contact = Contact::first();
-        return view('frontend.pages.contact-us', compact('contact'));
+        $metadetails = PageMetaDetails::where('page_name', 'contact_us')->first();
+        return view('frontend.pages.contact-us', compact('contact', 'metadetails'));
     }
 
 

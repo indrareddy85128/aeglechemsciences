@@ -32,6 +32,9 @@ class PageMetaDetailsResource extends Resource
                 Select::make('page_name')
                     ->options([
                         'home' => 'Home',
+                        'about_us' => 'About us',
+                        'products' => 'Products',
+                        'contact_us' => 'Contact us',
                     ])
                     ->native(false)->required(),
                 TextInput::make('title')->required(),
