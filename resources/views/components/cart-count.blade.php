@@ -1,0 +1,1 @@
+<sup>{{ $count }}</sup>
