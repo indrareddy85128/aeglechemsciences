@@ -19,6 +19,7 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Forms\Set;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Support\Str;
 
 class ProductResource extends Resource
@@ -96,7 +97,20 @@ class ProductResource extends Resource
                     }),
             ])
             ->filters([
-                //
+                SelectFilter::make('category')
+                    ->label('Category')
+                    ->relationship('category', 'name')
+                    ->searchable()
+                    ->preload(),
+
+                SelectFilter::make('stock')
+                    ->label('Stock Status')
+                    ->options([
+                        'In Stock' => 'In Stock',
+                        'Out of Stock' => 'Out of Stock',
+                    ])
+                    ->searchable()
+                    ->preload(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
