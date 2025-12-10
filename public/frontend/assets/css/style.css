@@ -6715,6 +6715,10 @@ ul.wp-block-latest-posts.is-grid.alignwide {
     line-height: inherit;
     position: relative;
     list-style: none;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: "Nunito", sans-serif;
+    text-transform: uppercase;
 }
 
 .ltn__utilize-overlay {

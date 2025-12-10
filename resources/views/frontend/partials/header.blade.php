@@ -141,36 +141,37 @@
              <button class="ltn__utilize-close">×</button>
          </div>
          <div class="ltn__utilize-menu-search-form">
-             <form action="#">
-                 <input type="text" placeholder="Search...">
-                 <button><i class="fas fa-search"></i></button>
+             <form id="search-form">
+                 <input type="text" id="search-input" placeholder="Search Chemical Name / CAS Number / HSN Code" />
+                 <button type="button">
+                     <span><i class="icon-search"></i></span>
+                 </button>
              </form>
+             <div id="search-results"
+                 style="display:none; position:absolute; top:60px; left:30%; width:40%; background:#fff; border:1px solid #ddd; border-radius:4px; box-shadow:0 4px 12px rgba(0,0,0,0.1); z-index:9999;">
+                 <ul id="results-list"></ul>
+             </div>
          </div>
          <div class="ltn__utilize-menu">
              <ul>
-                 <li><a href="index.html">Home</a>
+                 <li><a href="{{ route('home') }}">Home</a>
                  </li>
-                 <li><a href="about-us.html">About Us</a>
+                 <li><a href="{{ route('about.us') }}">About Us</a>
                  </li>
                  <li><a href="#">Our Certificates</a>
                  </li>
-                 <li><a href="#">Products</a>
+                 <li><a href="{{ route('products') }}">Products</a>
                      <ul class="sub-menu">
-                         <li><a href="speciality-chemicals.html">Speciality Chemicals</a></li>
+                         <x-category-list-menu />
                      </ul>
                  </li>
                  <li><a href="#">Carrers</a>
                  </li>
-                 <li><a href="contact.html">Contact</a></li>
+                 <li><a href="{{ route('contact.us') }}">Contact</a></li>
              </ul>
          </div>
          <div class="ltn__social-media-2">
-             <ul>
-                 <li><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
-                 <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
-                 <li><a href="#" title="Linkedin"><i class="fab fa-linkedin"></i></a></li>
-                 <li><a href="#" title="Instagram"><i class="fab fa-instagram"></i></a></li>
-             </ul>
+             <x-social-media-list />
          </div>
      </div>
  </div>
