@@ -20,13 +20,8 @@
         }
 
         .container {
-            width: 90%;
-            margin: 0 auto;
-            background-color: #fff;
+            width: 100%;
             padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            max-width: 320px;
             overflow: hidden;
         }
 

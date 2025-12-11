@@ -3,7 +3,6 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\OrderController;
-use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
 

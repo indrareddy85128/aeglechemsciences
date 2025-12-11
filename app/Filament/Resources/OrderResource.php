@@ -99,7 +99,7 @@ class OrderResource extends Resource
                 TextColumn::make('created_at')
                     ->label('Enquiry Date')
                     ->formatStateUsing(fn($state) => \Carbon\Carbon::parse($state)->format('d F Y')),
-            ])
+            ])->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])

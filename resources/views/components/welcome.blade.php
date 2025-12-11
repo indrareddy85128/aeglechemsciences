@@ -5,6 +5,6 @@
     </h1>
 
     <p class="mt-6 text-gray-500 leading-relaxed">
-        From your account dashboard you can view your recent orders, and edit your password and account details.
+        From your account dashboard you can view your recent Enquiries, and edit your password and account details.
     </p>
 </div>
