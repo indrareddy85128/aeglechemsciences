@@ -36,11 +36,12 @@ class FrontendController extends Controller
 
     public function product_details($slug)
     {
-        $product = product::where('slug', $slug)->first();
+        $product = Product::where('slug', $slug)
+            ->with('productVariants')
+            ->firstOrFail();
         $relatedProducts = Product::where('category_id', $product->category_id)
             ->where('id', '!=', $product->id)
             ->latest()
-            ->take(4)
             ->get();
         $metadetails = $product->metaDetails;
         return view('frontend.pages.product-details', compact('product', 'relatedProducts', 'metadetails'));

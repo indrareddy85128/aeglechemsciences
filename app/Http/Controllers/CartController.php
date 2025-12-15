@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,7 +13,7 @@ class CartController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $carts = Cart::with('product')
+        $carts = Cart::with('productVariant')
             ->where('user_id', $user->id)
             ->get();
         return view('frontend.pages.cart', compact('carts'));
@@ -22,29 +23,48 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'product_id' => 'required|exists:products,id',
+            'product_variant_id' => 'required|exists:product_variants,id',
             'quantity' => 'required|integer|min:1'
         ]);
 
         $user = Auth::user();
 
-        $product = Product::find($request->product_id);
+        $productVariant = ProductVariant::findOrFail($request->product_variant_id);
 
-        if ($product->stock === 'Out of Stock') {
+        if ($productVariant->product->stock === 'Out of Stock') {
             return redirect()->back()->with('error', 'This product is out of stock!');
         }
 
+        if ($productVariant->availability < 1) {
+            return redirect()->back()->with('error', 'This product pack is out of Availability!');
+        }
+
+        if ($request->quantity > $productVariant->availability) {
+            return redirect()->back()->with('error', 'Requested quantity exceeds Availability!');
+        }
+
         $cartItem = Cart::where('user_id', $user->id)
-            ->where('product_id', $request->product_id)
+            ->where('product_variant_id', $request->product_variant_id)
             ->first();
 
+
         if ($cartItem) {
-            $cartItem->quantity += $request->quantity;
+
+            $newQty = $cartItem->quantity + $request->quantity;
+
+            if ($newQty > $productVariant->availability) {
+                return redirect()->back()->with(
+                    'error',
+                    'You cannot add more than the Availability!'
+                );
+            }
+
+            $cartItem->quantity = $newQty;
             $cartItem->save();
         } else {
             Cart::create([
                 'user_id' => $user->id,
-                'product_id' => $request->product_id,
+                'product_variant_id' => $request->product_variant_id,
                 'quantity' => $request->quantity,
             ]);
         }
@@ -65,6 +85,19 @@ class CartController extends Controller
 
         if (!$cart) {
             return redirect()->back()->with('error', 'Cart item not found.');
+        }
+
+        $productVariant = $cart->productVariant;
+
+        if (!$productVariant) {
+            return redirect()->back()->with('error', 'Product variant not found.');
+        }
+
+        if ($request->quantity > $productVariant->availability) {
+            return redirect()->back()->with(
+                'error',
+                'Requested quantity exceeds Availability!'
+            );
         }
 
         $cart->quantity = $request->quantity;

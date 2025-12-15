@@ -48,8 +48,9 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                         @foreach ($order->orderItems as $item)
                                             <div>
-                                                {{ $item->product->name }} / {{ $item->product->cas_number }}
-                                                / {{ $item->product->hsn_code }}
+                                                {{ $item->productVariant->product->name }} /
+                                                {{ $item->productVariant->pack }}
+                                                / Quantity : {{ $item->quantity }}
                                             </div>
                                         @endforeach
                                     </td>

@@ -10,9 +10,6 @@ class Product extends Model
         'category_id',
         'name',
         'slug',
-        'inr_price',
-        'usd_price',
-        'quantity',
         'image',
         'catalogue_number',
         'cas_number',
@@ -34,13 +31,13 @@ class Product extends Model
         return $this->hasOne(MetaDetails::class);
     }
 
+    public function productVariants()
+    {
+        return $this->hasMany(ProductVariant::class);
+    }
+
     public function cart()
     {
         return $this->hasMany(Cart::class);
-    }
-
-    public function orderItems()
-    {
-        return $this->hasMany(OrderItem::class);
     }
 }

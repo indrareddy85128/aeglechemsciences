@@ -17,7 +17,7 @@
                                     <thead>
                                         <th class="cart-product-image">Image</th>
                                         <th class="cart-product-info">Product</th>
-                                        <th class="cart-product-subtotal">Size</th>
+                                        <th class="cart-product-subtotal">Packs</th>
                                         <th class="cart-product-price">Price</th>
                                         <th class="cart-product-quantity">Quantity</th>
                                         <th class="cart-product-remove">Remove</th>
@@ -26,23 +26,24 @@
                                         @foreach ($carts as $cart)
                                             <tr>
                                                 <td class="cart-product-image">
-                                                    <a href="{{ route('product.details', $cart->product->slug) }}"><img
-                                                            src="{{ asset(Storage::url($cart->product->image)) }}"
-                                                            alt="{{ $cart->product->name }}"></a>
+                                                    <a
+                                                        href="{{ route('product.details', $cart->productVariant->product->slug) }}"><img
+                                                            src="{{ asset(Storage::url($cart->productVariant->product->image)) }}"
+                                                            alt="{{ $cart->productVariant->product->name }}"></a>
                                                 </td>
                                                 <td class="cart-product-info">
                                                     <h4 class="m-0"><a
-                                                            href="{{ route('product.details', $cart->product->slug) }}">{{ $cart->product->name }}</a>
+                                                            href="{{ route('product.details', $cart->productVariant->product->slug) }}">{{ $cart->productVariant->product->name }}</a>
                                                     </h4>
                                                 </td>
                                                 <td class="cart-product-subtotal">
-                                                    {{ $cart->product->quantity }}
+                                                    {{ $cart->productVariant->pack }}
                                                 </td>
 
                                                 <td class="cart-product-price"><span
-                                                        class="price inr">₹{{ $cart->product->inr_price }}</span>
+                                                        class="price inr">₹{{ $cart->productVariant->inr_price }}</span>
                                                     <span class="price usd" style="display:none;">
-                                                        ${{ $cart->product->usd_price }}</span>
+                                                        ${{ $cart->productVariant->usd_price }}</span>
                                                 </td>
 
 

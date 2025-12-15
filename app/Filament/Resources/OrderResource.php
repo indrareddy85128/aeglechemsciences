@@ -43,37 +43,40 @@ class OrderResource extends Resource
                     $productLabel = 'Product ' . ($index + 1);
                     return Fieldset::make($productLabel)->schema([
                         ImageEntry::make('Product Image')
-                            ->getStateUsing(fn() => $orderItem->product->image)
+                            ->getStateUsing(fn() => $orderItem->productVariant->product->image)
                             ->label('Product Image')
                             ->width(100)
                             ->height(100),
                         TextEntry::make('Product Name')
-                            ->getStateUsing(fn() => $orderItem->product->name)
+                            ->getStateUsing(fn() => $orderItem->productVariant->product->name)
                             ->label('Product Name'),
 
                         TextEntry::make('Catalogue Number')
-                            ->getStateUsing(fn() => $orderItem->product->catalogue_number)
+                            ->getStateUsing(fn() => $orderItem->productVariant->product->catalogue_number)
                             ->label('Catalogue Number'),
 
                         TextEntry::make('CAS Number')
-                            ->getStateUsing(fn() => $orderItem->product->cas_number)
+                            ->getStateUsing(fn() => $orderItem->productVariant->product->cas_number)
                             ->label('CAS Number'),
 
                         TextEntry::make('HSN Code')
-                            ->getStateUsing(fn() => $orderItem->product->hsn_code)
+                            ->getStateUsing(fn() => $orderItem->productVariant->product->hsn_code)
                             ->label('HSN Code'),
 
-                        TextEntry::make('Product Size')
-                            ->getStateUsing(fn() => $orderItem->product->quantity)
-                            ->label('Product Size'),
+                        TextEntry::make('Product Pack')
+                            ->getStateUsing(fn() => $orderItem->productVariant->pack)
+                            ->label('Product Pack'),
 
                         TextEntry::make('Quantity')
                             ->getStateUsing(fn() => $orderItem->quantity)
                             ->label('Quantity'),
 
-                        TextEntry::make('Price')
-                            ->getStateUsing(fn() => '₹ ' . number_format($orderItem->price, 2))
-                            ->label('Price'),
+                        TextEntry::make('inr_price')
+                            ->getStateUsing(fn() => '₹ ' . number_format($orderItem->productVariant->inr_price, 2))
+                            ->label('Indian Price'),
+                        TextEntry::make('usd_price')
+                            ->getStateUsing(fn() => '$ ' . number_format($orderItem->productVariant->usd_price, 2))
+                            ->label('USA Price'),
                     ])->columns(2);
                 })->all(),
             ]);

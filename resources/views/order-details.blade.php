@@ -26,11 +26,13 @@
                                 <th class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Hsn Code</th>
                                 <th class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Product Size</th>
+                                    Packs</th>
                                 <th class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Quantity</th>
                                 <th class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Price</th>
+                                    INR Price</th>
+                                <th class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    USD Price</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -40,30 +42,32 @@
                                         {{ $loop->iteration }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <img class="w-16 h-auto" src="{{ asset(Storage::url($item->product->image)) }}"
-                                            alt="{{ $item->product->name }}">
+                                        <img style="width: 100px"
+                                            src="{{ asset(Storage::url($item->productVariant->product->image)) }}"
+                                            alt="{{ $item->productVariant->product->name }}">
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {{ $item->product->name }}</td>
+                                        {{ $item->productVariant->product->name }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {{ $item->product->catalogue_number }}</td>
+                                        {{ $item->productVariant->product->catalogue_number }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {{ $item->product->cas_number }}</td>
+                                        {{ $item->productVariant->product->cas_number }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {{ $item->product->hsn_code }}</td>
+                                        {{ $item->productVariant->product->hsn_code }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {{ $item->product->quantity }}</td>
+                                        {{ $item->productVariant->pack }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                         {{ $item->quantity }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap  text-sm text-gray-900">₹
-                                        {{ $item->price }}</td>
+                                        {{ $item->productVariant->inr_price }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap  text-sm text-gray-900">$
+                                        {{ $item->productVariant->usd_price }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
 
-                <!-- Back Button -->
                 <div class="mt-6">
                     <a href="{{ route('orders.index') }}" class="text-blue-600 hover:text-blue-900 font-medium">
                         &larr; Back to Enquiries

@@ -21,7 +21,8 @@
 
         .container {
             width: 100%;
-            padding: 30px;
+            margin: 0;
+            padding: 0;
             overflow: hidden;
         }
 
@@ -66,12 +67,8 @@
 
             .container {
                 width: 100%;
-                padding: 10px;
             }
 
-            .logo {
-                max-width: 150px;
-            }
 
             table {
                 font-size: 12px;
@@ -130,7 +127,7 @@
                     <tr>
                         <th>#</th>
                         <th>Product Name</th>
-                        <th>Size</th>
+                        <th>Packs</th>
                         <th>Quantity</th>
                         <th>Price</th>
                     </tr>
@@ -139,10 +136,10 @@
                     @foreach ($order->orderItems as $index => $item)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $item->product->name }}</td>
-                            <td>{{ $item->product->quantity }}</td>
+                            <td>{{ $item->productVariant->product->name }}</td>
+                            <td>{{ $item->productVariant->pack }}</td>
                             <td>{{ $item->quantity }}</td>
-                            <td>₹{{ $item->price }}</td>
+                            <td>₹{{ $item->productVariant->inr_price }}/${{ $item->productVariant->usd_price }}</td>
                         </tr>
                     @endforeach
                 </tbody>

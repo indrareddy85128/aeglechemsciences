@@ -16,9 +16,6 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('slug');
-            $table->decimal('inr_price');
-            $table->decimal('usd_price');
-            $table->string('quantity');
             $table->string('image');
             $table->string('catalogue_number');
             $table->string('cas_number');

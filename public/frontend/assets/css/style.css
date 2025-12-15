@@ -1525,8 +1525,8 @@ ul {
 }
 
 .slick-arrow-1 .slick-arrow:hover {
-    background-color: var(--ltn__secondary-color);
-    border-color: var(--ltn__secondary-color);
+    background-color: #F97C09;
+    border-color: #F97C09;
     color: var(--white) !important;
 }
 
@@ -4020,7 +4020,7 @@ ul.wp-block-latest-posts.is-grid.alignwide {
     Widgets
 -------------------------------------------------------------- */
 .widget {
-    padding: 15px 30px;
+    padding: 5px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
@@ -4923,11 +4923,11 @@ ul.wp-block-latest-posts.is-grid.alignwide {
 }
 
 /* ----------------------------------------------------
-    Widget Responsive
+        Widget Responsive
 ---------------------------------------------------- */
 @media (max-width: 1199px) {
     .widget {
-        padding: 35px 20px 40px 20px;
+        padding: 5px;
     }
 
     .top-rated-product-img {
@@ -8626,9 +8626,9 @@ ul.wp-block-latest-posts.is-grid.alignwide {
 }
 
 .product-price {
-    color: var(--ltn__secondary-color);
+    color: #F97C09;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .product-price del {
@@ -8887,9 +8887,7 @@ ul.wp-block-latest-posts.is-grid.alignwide {
     }
 }
 
-.modal-product-info {
-    padding-left: 25px;
-}
+
 
 .modal-product-info h3 {
     font-family: "Nunito", sans-serif;
@@ -16886,7 +16884,7 @@ input.cart-plus-minus-box {
     font-size: 14px;
     font-family: "Nunito", sans-serif;
     font-weight: 700;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .tab-active {
@@ -16975,6 +16973,21 @@ input.cart-plus-minus-box {
 
 #scrollUp {
     display: none !important;
+}
+
+.tablie-customize {
+    font-family: "Nunito", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+.quantity-customize {
+    height: 34px;
+    line-height: 31px;
+    width: 100px;
+    margin-left: 25px;
 }
 
 /* ----------------------------------------------------

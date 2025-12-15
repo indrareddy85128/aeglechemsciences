@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers\MetaDetailsRelationManager;
+use App\Filament\Resources\ProductResource\RelationManagers\ProductVariantsRelationManager;
 use App\Models\Category;
 use App\Models\Product;
 use Filament\Forms\Components\FileUpload;
@@ -48,10 +49,6 @@ class ProductResource extends Resource
                                 TextInput::make('slug')
                                     ->readOnly()
                                     ->required(),
-                                TextInput::make('inr_price')->prefixIcon('heroicon-o-currency-rupee')->label('INR Price')->required(),
-                                TextInput::make('usd_price')
-                                    ->prefixIcon('heroicon-o-currency-dollar')->label('USD Price')->required(),
-                                TextInput::make('quantity')->required(),
                                 TextInput::make('catalogue_number')->required(),
                                 TextInput::make('cas_number')->required(),
                                 TextInput::make('hsn_code')->required(),
@@ -84,8 +81,7 @@ class ProductResource extends Resource
                 ImageColumn::make('image')->width(100)->height(100),
                 TextColumn::make('category.name'),
                 TextColumn::make('name')->searchable(),
-                TextColumn::make('inr_price')->label('INR Price'),
-                TextColumn::make('usd_price')->label('USD Price'),
+                TextColumn::make('catalogue_number')->searchable(),
                 IconColumn::make('stock')
                     ->icon(fn(string $state): string => match ($state) {
                         'In Stock' => 'heroicon-o-check-circle',
@@ -125,7 +121,8 @@ class ProductResource extends Resource
     public static function getRelations(): array
     {
         return [
-            MetaDetailsRelationManager::class
+            ProductVariantsRelationManager::class,
+            MetaDetailsRelationManager::class,
         ];
     }
 

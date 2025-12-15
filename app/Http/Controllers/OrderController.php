@@ -17,7 +17,7 @@ class OrderController extends Controller
     {
         $user = Auth::user();
         $orders = Order::where('user_id', $user->id)
-            ->with('orderItems.product')
+            ->with('orderItems.productVariant')
             ->orderBy('created_at', 'desc')
             ->get();
         return view('orders', compact('orders'));
@@ -27,7 +27,9 @@ class OrderController extends Controller
     {
         $user = Auth::user();
 
-        $cartItems = Cart::with('product')->where('user_id', $user->id)->get();
+        $cartItems = Cart::with('productVariant')
+            ->where('user_id', $user->id)
+            ->get();
 
         if ($cartItems->isEmpty()) {
             return redirect()->back()->with('error', 'Cart is empty!');
@@ -49,12 +51,12 @@ class OrderController extends Controller
                 'order_number' => generateUniqueOrderNumber(),
             ]);
 
+
             foreach ($cartItems as $item) {
                 OrderItem::create([
                     'order_id' => $order->id,
-                    'product_id' => $item->product_id,
+                    'product_variant_id' => $item->product_variant_id,
                     'quantity' => $item->quantity,
-                    'price' => $item->product->inr_price,
                 ]);
             }
 
@@ -73,7 +75,7 @@ class OrderController extends Controller
 
     public function show($id)
     {
-        $order = Order::with('user', 'orderItems.product')->findOrFail($id);
+        $order = Order::with('user', 'orderItems.productVariant')->findOrFail($id);
 
         if ($order->user_id !== Auth::id()) {
             abort(403, 'Unauthorized action.');
