@@ -72,10 +72,23 @@ class OrderResource extends Resource
                             ->label('Quantity'),
 
                         TextEntry::make('inr_price')
-                            ->getStateUsing(fn() => '₹ ' . number_format($orderItem->productVariant->inr_price, 2))
-                            ->label('Indian Price'),
+                            ->getStateUsing(function () use ($orderItem) {
+                                $price = $orderItem->productVariant->inr_price;
+
+                                return is_numeric($price)
+                                    ? '₹ ' . number_format($price, 2)
+                                    : $price;
+                            })
+                            ->label('IND Price'),
+
                         TextEntry::make('usd_price')
-                            ->getStateUsing(fn() => '$ ' . number_format($orderItem->productVariant->usd_price, 2))
+                            ->getStateUsing(function () use ($orderItem) {
+                                $price = $orderItem->productVariant->usd_price;
+
+                                return is_numeric($price)
+                                    ? '$ ' . number_format($price, 2)
+                                    : $price;
+                            })
                             ->label('USA Price'),
                     ])->columns(2);
                 })->all(),

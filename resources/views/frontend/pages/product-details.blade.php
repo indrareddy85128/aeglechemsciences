@@ -87,12 +87,22 @@
                                                 <th>{{ $variant->pack }}</th>
                                                 <td>{{ $variant->availability }}</td>
                                                 <td>
-                                                    <div class="product-price">
-                                                        <span class="price inr fw-bold">₹{{ $variant->inr_price }}</span>
-                                                        <span
-                                                            class="price usd fw-bold d-none">${{ $variant->usd_price }}</span>
+                                                    <div class="product-price fw-bold">
+                                                        @if (is_numeric($variant->inr_price))
+                                                            <span class="price inr">₹{{ $variant->inr_price }}</span>
+                                                        @else
+                                                            <span class="price inr">{{ $variant->inr_price }}</span>
+                                                        @endif
+
+                                                        @if (is_numeric($variant->usd_price))
+                                                            <span
+                                                                class="price usd d-none">${{ $variant->usd_price }}</span>
+                                                        @else
+                                                            <span class="price usd d-none">{{ $variant->usd_price }}</span>
+                                                        @endif
                                                     </div>
                                                 </td>
+
                                                 <form action="{{ route('cart.store') }}" method="POST">
                                                     @csrf
                                                     <td>

@@ -58,10 +58,22 @@
                                         {{ $item->productVariant->pack }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                         {{ $item->quantity }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap  text-sm text-gray-900">₹
-                                        {{ $item->productVariant->inr_price }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap  text-sm text-gray-900">$
-                                        {{ $item->productVariant->usd_price }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        @if (is_numeric($item->productVariant->inr_price))
+                                            ₹{{ $item->productVariant->inr_price }}
+                                        @else
+                                            {{ $item->productVariant->inr_price }}
+                                        @endif
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        @if (is_numeric($item->productVariant->usd_price))
+                                            ${{ $item->productVariant->usd_price }}
+                                        @else
+                                            {{ $item->productVariant->usd_price }}
+                                        @endif
+                                    </td>
+
                                 </tr>
                             @endforeach
                         </tbody>

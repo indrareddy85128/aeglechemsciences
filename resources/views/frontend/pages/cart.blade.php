@@ -40,11 +40,32 @@
                                                     {{ $cart->productVariant->pack }}
                                                 </td>
 
-                                                <td class="cart-product-price"><span
-                                                        class="price inr">₹{{ $cart->productVariant->inr_price }}</span>
-                                                    <span class="price usd" style="display:none;">
-                                                        ${{ $cart->productVariant->usd_price }}</span>
+                                                <td class="cart-product-price fw-bold">
+
+                                                    {{-- INR --}}
+                                                    @if (is_numeric($cart->productVariant->inr_price))
+                                                        <span class="price inr">
+                                                            ₹{{ $cart->productVariant->inr_price }}
+                                                        </span>
+                                                    @else
+                                                        <span class="price inr">
+                                                            {{ $cart->productVariant->inr_price }}
+                                                        </span>
+                                                    @endif
+
+                                                    {{-- USD --}}
+                                                    @if (is_numeric($cart->productVariant->usd_price))
+                                                        <span class="price usd" style="display:none;">
+                                                            ${{ $cart->productVariant->usd_price }}
+                                                        </span>
+                                                    @else
+                                                        <span class="price usd" style="display:none;">
+                                                            {{ $cart->productVariant->usd_price }}
+                                                        </span>
+                                                    @endif
+
                                                 </td>
+
 
 
                                                 <td class="cart-product-quantity">

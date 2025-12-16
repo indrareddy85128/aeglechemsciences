@@ -139,7 +139,19 @@
                             <td>{{ $item->productVariant->product->name }}</td>
                             <td>{{ $item->productVariant->pack }}</td>
                             <td>{{ $item->quantity }}</td>
-                            <td>₹{{ $item->productVariant->inr_price }}/${{ $item->productVariant->usd_price }}</td>
+                            <td>
+                                @if (is_numeric($item->productVariant->inr_price))
+                                    ₹{{ $item->productVariant->inr_price }}
+                                @else
+                                    {{ $item->productVariant->inr_price }}
+                                @endif
+                                /
+                                @if (is_numeric($item->productVariant->usd_price))
+                                    ${{ $item->productVariant->usd_price }}
+                                @else
+                                    {{ $item->productVariant->usd_price }}
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

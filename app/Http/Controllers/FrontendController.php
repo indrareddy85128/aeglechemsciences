@@ -7,7 +7,9 @@ use App\Models\Category;
 use App\Models\Contact;
 use App\Models\PageMetaDetails;
 use App\Models\Product;
+use App\Models\SearchHistory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class FrontendController extends Controller
@@ -87,13 +89,27 @@ class FrontendController extends Controller
 
     public function search(Request $request)
     {
-        $query = $request->get('search');
-        $products = Product::where('name', 'LIKE', "%{$query}%")
-            ->orWhere('cas_number', 'LIKE', "%{$query}%")
-            ->orWhere('hsn_code', 'LIKE', "%{$query}%")
-            ->take(10)
+        $query = trim($request->search);
+
+        if (Auth::check()) {
+            SearchHistory::create([
+                'user_id' => Auth::id(),
+                'query' => $query
+            ]);
+        }
+
+        $products = Product::select('id', 'name', 'slug', 'cas_number', 'hsn_code')
+            ->where(function ($q) use ($query) {
+                $q->where('name', 'LIKE', "{$query}%")
+                    ->orWhere('cas_number', 'LIKE', "{$query}%")
+                    ->orWhere('hsn_code', 'LIKE', "{$query}%");
+            })
+            ->limit(10)
             ->get();
 
-        return response()->json($products);
+        return response()->json([
+            'auth' => Auth::check(),
+            'products' => $products
+        ]);
     }
 }

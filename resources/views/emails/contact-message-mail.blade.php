@@ -20,13 +20,9 @@
         }
 
         .container {
-            width: 90%;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            max-width: 320px;
+            width: 100%;
+            margin: 0;
+            padding: 0;
             overflow: hidden;
         }
 
@@ -41,6 +37,29 @@
             margin: 8px 0;
         }
 
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8f8f8;
+            font-weight: 600;
+        }
+
+
+
+
         @media (max-width: 600px) {
             body {
                 padding: 10px;
@@ -48,12 +67,31 @@
 
             .container {
                 width: 100%;
-                padding: 10px;
             }
 
+
+            table {
+                font-size: 12px;
+            }
+
+            th,
+            td {
+                padding: 8px;
+            }
+
+            .button {
+                padding: 10px 16px;
+            }
         }
 
-
+        @media (max-width: 768px) {
+            table {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
 
         .footer {
             text-align: center;

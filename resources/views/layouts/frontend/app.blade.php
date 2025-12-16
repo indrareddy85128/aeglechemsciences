@@ -33,46 +33,56 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
+        let ajaxRequest = null;
+        let debounceTimer = null;
 
-            $('#search-input').on('keyup', function() {
-                let query = $(this).val().trim();
-                if (query.length > 0) {
-                    $.ajax({
-                        url: "{{ route('products.search') }}",
-                        type: "GET",
-                        data: {
-                            search: query
-                        },
-                        success: function(data) {
-                            let html = '';
-                            if (data.length > 0) {
-                                data.forEach(product => {
-                                    html +=
-                                        `<li><a href="/product/${product.slug}">${product.name} / ${product.cas_number} / ${product.hsn_code}</a></li>`;
-                                });
-                                $('#search-results').show();
-                            } else {
-                                html =
-                                    '<p style="color: red; margin: 0px; text-align: center;">No results found</p>';
-                                $('#search-results').show();
-                            }
-                            $('#results-list').html(html);
+        $('#search-input').on('keyup', function() {
+            let query = $(this).val().trim();
+
+            clearTimeout(debounceTimer);
+
+            if (query.length < 2) {
+                $('#search-results').hide();
+                return;
+            }
+
+            debounceTimer = setTimeout(() => {
+
+                if (ajaxRequest) ajaxRequest.abort();
+
+                ajaxRequest = $.ajax({
+                    url: "{{ route('products.search') }}",
+                    type: "GET",
+                    data: {
+                        search: query
+                    },
+                    success: function(data) {
+                        let html = '';
+
+                        if (data.products.length > 0) {
+                            data.products.forEach(product => {
+                                html += `
+                                <li>
+                                    <a href="/product/${product.slug}">
+                                        ${product.name} / ${product.cas_number} / ${product.hsn_code}
+                                    </a>
+                                </li>`;
+                            });
+                        } else {
+                            html = data.auth ?
+                                '<p style="color:red;text-align:center;margin:0;">No records found</p>' :
+                                '<p style="color:red;text-align:center;margin:0;">Please login</p>';
                         }
-                    });
-                } else {
-                    $('#search-results').hide();
-                }
-            });
 
-            $(document).click(function(e) {
-                if (!$(e.target).closest('#search-form, #search-results').length) {
-                    $('#search-results').hide();
-                }
-            });
+                        $('#results-list').html(html);
+                        $('#search-results').show();
+                    }
+                });
 
+            }, 300);
         });
     </script>
+
 
     <script src="{{ asset('frontend/assets/js/plugins.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
